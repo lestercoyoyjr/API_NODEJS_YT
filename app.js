@@ -23,3 +23,21 @@ conexion.connect(error => {
 
     console.log('Conexion exitosa a la Base de Datos');
 })
+
+// GET ALL
+app.get('/', (req,res) => {
+    res.send('API');
+})
+
+// GET USERS
+app.get('/usuarios', (req,res) => {
+    conexion.query('SELECT * FROM usuarios;', (error, resultados) => {
+        if(error) return console.log(error.message);
+
+        if(resultados.length > 0){
+            res.json(resultados);
+        } else {
+            res.send('No hay registros');
+        }
+    })
+})
