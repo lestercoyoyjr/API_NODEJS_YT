@@ -89,3 +89,19 @@ app.put('/update/:id', (req,res) =>{
     })
 });
 
+// DELETE USER
+app.delete('/usuarios/:id', (req, res) => {
+    const {id} = req.params;
+
+    const query = `DELETE FROM usuarios WHERE idUsuario=${id}`;
+
+    conexion.query(query, (error, resultado) => {
+        if(error) return console.error(error.message);
+
+        if(resultado.length > 0){
+            res.json(resultado);
+        } else {
+            res.send('Se elimino el registro correctamente');
+        }
+    })
+})
