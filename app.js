@@ -41,3 +41,35 @@ app.get('/usuarios', (req,res) => {
         }
     })
 })
+
+// GET USER
+app.get('/usuarios/:id', (req, res) => {
+    const {id} = req.params;
+
+    conexion.query(`SELECT * FROM usuarios WHERE idUsuario=${id}`, (error, resultado) => {
+        if(error) return console.log(error.message);
+
+        if(resultado.length > 0){
+            res.json(resultado);
+        } else {
+            res.send('No hay registros');
+        }
+    })
+})
+
+// ADD USER
+app.post('/add', (req,res) => {
+    const usuario = {
+        usuario: req.body.usuario,
+        contrasena: req.body.contrasena,
+        email: req.body.email,
+    }
+
+    const query = `INSERT INTO usuarios SET ?`;
+
+    conexion.query(query, usuario, (error)=>{
+        if(error) return console.log(error.message);
+
+        res.send('se inserto correctamente el usuario');
+    });
+})
