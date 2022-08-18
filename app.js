@@ -32,7 +32,7 @@ app.get('/', (req,res) => {
 // GET USERS
 app.get('/usuarios', (req,res) => {
     conexion.query('SELECT * FROM usuarios;', (error, resultados) => {
-        if(error) return console.log(error.message);
+        if(error) return console.error(error.message);
 
         if(resultados.length > 0){
             res.json(resultados);
@@ -47,7 +47,7 @@ app.get('/usuarios/:id', (req, res) => {
     const {id} = req.params;
 
     conexion.query(`SELECT * FROM usuarios WHERE idUsuario=${id}`, (error, resultado) => {
-        if(error) return console.log(error.message);
+        if(error) return console.error(error.message);
 
         if(resultado.length > 0){
             res.json(resultado);
@@ -68,8 +68,24 @@ app.post('/add', (req,res) => {
     const query = `INSERT INTO usuarios SET ?`;
 
     conexion.query(query, usuario, (error)=>{
-        if(error) return console.log(error.message);
+        if(error) return console.error(error.message);
 
         res.send('se inserto correctamente el usuario');
     });
 })
+
+// UPDATE USER
+app.put('/update/:id', (req,res) =>{
+    const {id} = req.params;
+
+    const {usuario, contrasena, email} = req.body;
+
+    const query = `UPDATE usuarios SET usuario='${usuario}', contrasena='${contrasena}', email=''${email} WHERE idUsuario='${id}'`;
+
+    conexion.query(query,(error) => {
+        if(error) return console.error(error.message);
+
+        res.send(`Se actualizo correctamente el registro ${id}`);
+    })
+});
+
