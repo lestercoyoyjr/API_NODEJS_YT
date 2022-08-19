@@ -75,20 +75,18 @@ app.post('/add', (req, res) => {
 });
 
 // UPDATE USER
-app.put('/update/:id', (req,res) =>{
+app.put('/update/:id', (req, res) => {
     const {id} = req.params;
 
     const {usuario, contrasena, email} = req.body;
 
-    const query = `UPDATE usuarios SET usuario='${usuario}', contrasena='${contrasena}', email=''${email} WHERE idUsuario='${id}'`;
-
-    conexion.query(query,(error) => {
+    const query = `UPDATE usuarios SET usuario='${usuario}', contrasena='${contrasena}', email='${email}' WHERE idUsuario='${id}';`;
+    conexion.query(query, (error) => {
         if(error) return console.error(error.message);
 
         res.send(`Se actualizo correctamente el registro ${id}`);
-    })
+    });
 });
-
 // DELETE USER
 app.delete('/usuarios/:id', (req, res) => {
     const {id} = req.params;
