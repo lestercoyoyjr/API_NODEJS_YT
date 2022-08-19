@@ -24,7 +24,7 @@ conexion.connect(error => {
     console.log('Conexion exitosa a la Base de Datos');
 })
 
-// GET ALL
+// GET RESPONSE
 app.get('/', (req,res) => {
     res.send('API');
 })
@@ -58,21 +58,21 @@ app.get('/usuarios/:id', (req, res) => {
 })
 
 // ADD USER
-app.post('/add', (req,res) => {
+app.post('/add', (req, res) => {
     const usuario = {
         usuario: req.body.usuario,
         contrasena: req.body.contrasena,
-        email: req.body.email,
-    }
+        email: req.body.email
+    };
 
     const query = `INSERT INTO usuarios SET ?`;
 
-    conexion.query(query, usuario, (error)=>{
+    conexion.query(query, usuario, (error)=> {
         if(error) return console.error(error.message);
 
-        res.send('se inserto correctamente el usuario');
+        res.send(`se inserto correctamente el usuario`);
     });
-})
+});
 
 // UPDATE USER
 app.put('/update/:id', (req,res) =>{
